@@ -40,3 +40,8 @@
   top: 20px;
   right: 20px;
 }
+
+.form-message {
+  width: 100%;
+  text-align: center;
+}
