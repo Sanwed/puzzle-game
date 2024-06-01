@@ -19,9 +19,10 @@ class LoginScreen {
     container.append(form);
 
     const message = document.createElement("span");
-    message.classList.add('form-message');
-    message.textContent = 'All fields must begin with a capital letter'
-    
+    message.classList.add("form-message");
+    message.textContent = "All fields must begin with a capital letter";
+    form.append(message);
+
     const nameLabel = document.createElement("label");
     form.addEventListener("submit", this.changeToMenuScreen);
     form.append(nameLabel);
