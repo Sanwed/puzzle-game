@@ -1,0 +1,42 @@
+.login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-screen form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 30px;
+  border: 5px solid #444;
+}
+
+.login-screen-btn {
+  cursor: pointer;
+}
+
+.login-screen label {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.login-screen label span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.login-screen label input {
+  width: 100%;;
+  padding: 5px;
+  border: none;
+  background: #ddd;
+}
+
+.logout {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}

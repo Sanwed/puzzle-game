@@ -1,0 +1,16 @@
+.menu-screen {
+  display: grid;
+  justify-content: center;
+  align-content: start;
+  margin-top: 5vh;
+  grid-template-columns: 5vw 60vw;
+  gap: 20px;
+}
+
+.game-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  grid-column: 1 / -1;
+}

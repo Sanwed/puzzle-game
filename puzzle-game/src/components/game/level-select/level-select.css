@@ -1,0 +1,8 @@
+.level-select {
+  grid-column: 1 / -1;
+}
+
+.level-select label {
+  display: block;
+  margin-bottom: 15px;
+}
