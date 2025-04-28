@@ -11,13 +11,13 @@ import type { WordCollection } from "../../interfaces/interfaces";
 import Puzzle from "../puzzle/puzzle";
 
 class LevelSelect {
-  private puzzle: Puzzle;
+  private readonly puzzle: Puzzle;
 
   constructor() {
     this.puzzle = new Puzzle();
   }
 
-  private setRounds = (levelData: WordCollection[]) => {
+  private readonly setRounds = (levelData: WordCollection[]) => {
     const container = document.querySelector(".round-select") as HTMLElement;
     container.innerHTML = "";
 
@@ -97,13 +97,13 @@ class LevelSelect {
     const currLevel = levelSelect.value;
     const currRound = roundSelect.value;
     const level = levelData.find(
-      (el: WordCollection) => el.levelData.id === `${currLevel}_${currRound}`
+      (el: WordCollection) => el.levelData.id === `${currLevel}_${currRound}`,
     ) as WordCollection;
 
     this.puzzle.init(level, this, levelData);
   };
 
-  private createElements = () => {
+  private readonly createElements = () => {
     const menuScreen = document.querySelector(".menu-screen") as HTMLElement;
 
     const container = document.createElement("div");

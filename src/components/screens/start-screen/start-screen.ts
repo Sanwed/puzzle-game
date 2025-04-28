@@ -1,12 +1,7 @@
 import "./start-screen.css";
 
+import type { GameRules } from "../../interfaces/interfaces";
 import MenuScreen from "../menu-screen/menu-screen";
-
-interface GameRules {
-  title: string;
-  description: string;
-  rules: string[];
-}
 
 class StartScreen {
   private readonly menuScreen: MenuScreen;
@@ -14,9 +9,10 @@ class StartScreen {
     title: "Welcome to English Puzzle Game!",
     description:
       "Build English phrases and watch them transform into beautiful images!",
+    rulesTitle: "Rules",
     rules: [
       "You will see scrambled English phrases",
-      "Drag and drop words to form correct sentences",
+      "Drag and drop words to form correct sentences or just click on them",
       "Each correct phrase reveals a part of the hidden image",
       "Complete all phrases to see the full picture",
       "Learn English while having fun!",
@@ -53,7 +49,7 @@ class StartScreen {
     return rulesList;
   }
 
-  private createElements(): void {
+  public init = (): void => {
     const container = document.createElement("div");
     container.classList.add("start-screen", "full-screen", "screen");
     this.container.append(container);
@@ -68,6 +64,10 @@ class StartScreen {
     description.textContent = this.gameRules.description;
     wrapper.append(description);
 
+    const rulesTitle = document.createElement("h2");
+    rulesTitle.textContent = this.gameRules.rulesTitle;
+    wrapper.append(rulesTitle);
+
     wrapper.append(this.createRulesList());
 
     const button = document.createElement("button");
@@ -75,10 +75,6 @@ class StartScreen {
     button.textContent = "Start Game";
     button.addEventListener("click", this.changeToGameScreen);
     wrapper.append(button);
-  }
-
-  public init = (): void => {
-    this.createElements();
   };
 }
 

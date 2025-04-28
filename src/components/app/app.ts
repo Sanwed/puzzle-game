@@ -1,19 +1,11 @@
 import StartScreen from "../screens/start-screen/start-screen";
 
 class App {
-  private createMainContainer = () => {
-    const body = document.body;
-
+  public start = () => {
     const mainContainer = document.createElement("div");
     mainContainer.classList.add("page-wrapper");
 
-    body.append(mainContainer);
-
-    return mainContainer;
-  };
-
-  public start = () => {
-    const mainContainer = this.createMainContainer();
+    document.body.append(mainContainer);
 
     const startScreen = new StartScreen(mainContainer);
 

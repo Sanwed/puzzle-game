@@ -20,3 +20,10 @@ export interface WordCollection {
   levelData: LevelData;
   words: Word[];
 }
+
+export interface GameRules {
+  title: string;
+  description: string;
+  rulesTitle: string;
+  rules: string[];
+}

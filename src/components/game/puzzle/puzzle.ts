@@ -2,6 +2,7 @@ import "./puzzle.css";
 
 import type { WordCollection } from "../../interfaces/interfaces";
 import { shuffleArr } from "../../utils/utils";
+import { BASE_IMAGE_URL } from "../../constants/constants";
 import type LevelSelect from "../level-select/level-select";
 
 class Puzzle {
@@ -16,15 +17,13 @@ class Puzzle {
     this.dragged = document.createElement("canvas");
   }
 
-  private setSizes = (
+  private readonly setSizes = (
     field: HTMLElement,
     pieces: HTMLElement,
     image: HTMLImageElement
   ) => {
     field.style.maxWidth = `${image.naturalWidth}px`;
     field.style.maxHeight = `${image.naturalHeight}px`;
-    pieces.style.maxWidth = `${image.naturalWidth}px`;
-    pieces.style.maxHeight = `${image.naturalHeight}px`;
 
     image.width = field.clientWidth;
     image.height = field.clientHeight;
@@ -240,8 +239,14 @@ class Puzzle {
     return null;
   };
 
+  private readonly clearErrorMessage = () => {
+    const wrongText = document.querySelector("#wrong") as HTMLElement;
+    wrongText.textContent = "";
+  };
+
   private handleTileClick = (canvas: HTMLCanvasElement) => {
     if (this.isAnimating) return;
+    this.clearErrorMessage();
 
     if (canvas.parentElement?.classList.contains("pieces")) {
       const emptySlot = this.findFirstEmptySlot();
@@ -281,6 +286,10 @@ class Puzzle {
     wordsData: WordCollection
   ) => {
     const pieces = document.querySelector(".pieces") as HTMLElement;
+
+    if (this.correctAnswers >= wordsData.words.length) {
+      return;
+    }
 
     const words = wordsData.words[this.correctAnswers].textExample.split(" ");
     const length = words.length;
@@ -392,8 +401,8 @@ class Puzzle {
     phrase.innerHTML = "";
     game.innerHTML = "";
     pieces.innerHTML = "";
+    this.clearErrorMessage();
 
-    this.cutHeight = 0;
     this.correctAnswers = 0;
     this.rowTilesCount = [];
   };
@@ -405,7 +414,7 @@ class Puzzle {
   ) => {
     this.clear();
     const image = new Image();
-    image.src = `./assets/images/${wordsData.levelData.imageSrc}`;
+    image.src = `${BASE_IMAGE_URL}${wordsData.levelData.imageSrc}`;
 
     this.initGameField(image, wordsData);
 
@@ -414,6 +423,7 @@ class Puzzle {
       const rows = document.querySelectorAll(
         ".game-row"
       ) as NodeListOf<HTMLElement>;
+
       const row = Array.from(rows).at(-1);
 
       if (row) {
@@ -427,15 +437,34 @@ class Puzzle {
         }
 
         if (result === expected) {
-          const wrongText = document.querySelector("#wrong") as HTMLElement;
-          wrongText.textContent = "";
+          this.clearErrorMessage();
           row.style.pointerEvents = "none";
           row.classList.add("correct");
           this.correctAnswers++;
           this.makePiecesRow(image, wordsData);
 
           if (rows.length === 10) {
-            levelSelect.nextLevel(wholeLevel);
+            const overlay = document.createElement("div");
+            overlay.classList.add("level-complete-overlay");
+
+            const completeImage = document.createElement("img");
+            completeImage.classList.add("level-complete-image");
+            completeImage.src = `./assets/images/${wordsData.levelData.imageSrc}`;
+
+            overlay.appendChild(completeImage);
+            document.body.appendChild(overlay);
+
+            setTimeout(() => {
+              overlay.classList.add("visible");
+            }, 100);
+
+            completeImage.addEventListener("click", () => {
+              overlay.classList.remove("visible");
+              setTimeout(() => {
+                overlay.remove();
+                levelSelect.nextLevel(wholeLevel);
+              }, 300);
+            });
           }
         } else {
           const wrongText = document.querySelector("#wrong") as HTMLElement;

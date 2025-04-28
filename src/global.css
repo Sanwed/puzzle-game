@@ -37,5 +37,4 @@ button {
 
 button:hover {
   background: #ddd;
-  transform: scale(1.03);
 }

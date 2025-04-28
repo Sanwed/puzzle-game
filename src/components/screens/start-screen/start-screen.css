@@ -6,47 +6,53 @@
 }
 
 .start-screen-wrapper {
-  text-align: center;
-  padding: 2rem;
+  padding: 1rem 2rem;
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   width: 90%;
+  color: #333;
 }
 
 .start-screen h1 {
-  color: #333;
   margin-bottom: 1.5rem;
   font-size: 2rem;
 }
 
-.start-screen p {
-  color: #666;
+.start-screen h2 {
+  font-size: 2rem;
   margin-bottom: 2rem;
+  text-align: center;
+}
+
+.start-screen p {
+  margin-bottom: 1.5rem;
   line-height: 1.6;
   font-size: 1.3rem;
+  font-style: italic;
 }
 
 .game-rules-list {
-  text-align: left;
+  padding-left: 20px;
 }
 
 .game-rules-list li {
-  color: #555;
-  margin-bottom: 0.8rem;
-  position: relative;
+  margin-bottom: 0.2rem;
   line-height: 1.6;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 
 
 .start-screen-btn {
+  display: block;
+  margin: 0 auto;
   background-color: #4a90e2;
   color: white;
+  text-transform: uppercase;
   border: none;
   padding: 1rem 2rem;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -54,8 +60,4 @@
 
 .start-screen-btn:hover {
   background-color: #357abd;
-}
-
-.start-screen-btn:active {
-  transform: scale(0.98);
 }
