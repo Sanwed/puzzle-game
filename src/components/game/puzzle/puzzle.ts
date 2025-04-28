@@ -24,6 +24,8 @@ class Puzzle {
   ) => {
     field.style.maxWidth = `${image.naturalWidth}px`;
     field.style.maxHeight = `${image.naturalHeight}px`;
+    pieces.style.maxWidth = `${image.naturalWidth}px`;
+    pieces.style.maxHeight = `${image.naturalHeight}px`;
 
     image.width = field.clientWidth;
     image.height = field.clientHeight;
