@@ -100,6 +100,7 @@ class LevelSelect {
       (el: WordCollection) => el.levelData.id === `${currLevel}_${currRound}`,
     ) as WordCollection;
 
+    this.puzzle.clear();
     this.puzzle.init(level, this, levelData);
   };
 

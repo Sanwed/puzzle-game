@@ -22,27 +22,34 @@ class Puzzle {
     pieces: HTMLElement,
     image: HTMLImageElement
   ) => {
-    field.style.maxWidth = `${image.naturalWidth}px`;
-    field.style.maxHeight = `${image.naturalHeight}px`;
-    pieces.style.maxWidth = `${image.naturalWidth}px`;
-    pieces.style.maxHeight = `${image.naturalHeight}px`;
+    const container = field.parentElement as HTMLElement;
+    const containerWidth = container.clientWidth;
+    const aspectRatio = image.naturalWidth / image.naturalHeight;
 
-    image.width = field.clientWidth;
-    image.height = field.clientHeight;
+    const newWidth = Math.min(containerWidth, image.naturalWidth);
+    const newHeight = newWidth / aspectRatio;
+
+    image.width = newWidth;
+    image.height = newHeight;
+
+    field.style.width = `${newWidth}px`;
+    field.style.height = `${newHeight}px`;
 
     const rows = document.querySelectorAll(
       ".game-row"
     ) as NodeListOf<HTMLElement>;
 
     rows.forEach((row, index) => {
-      row.style.height = `${Math.floor(image.height / 10)}px`;
+      const rowHeight = Math.floor(newHeight / 10);
+      row.style.height = `${rowHeight}px`;
 
       const cells = row.querySelectorAll(
         ".game-cell"
       ) as NodeListOf<HTMLElement>;
       cells.forEach((cell) => {
-        cell.style.width = `${Math.ceil(image.width / cells.length)}px`;
-        cell.style.height = `${Math.ceil(image.height / 10)}px`;
+        const cellWidth = Math.ceil(newWidth / cells.length);
+        cell.style.width = `${cellWidth}px`;
+        cell.style.height = `${rowHeight}px`;
       });
 
       const rowTiles = row.querySelectorAll(
@@ -55,20 +62,21 @@ class Puzzle {
 
       if (tiles.length > 0) {
         const tilesCount = this.rowTilesCount[index] || tiles.length;
+        const tileWidth = Math.floor(newWidth / tilesCount);
+        const tileHeight = rowHeight;
+
         tiles.forEach((tile) => {
           const context = tile.getContext("2d") as CanvasRenderingContext2D;
-          const newWidth = Math.floor(image.width / tilesCount);
-          const newHeight = Math.floor(image.height / 10);
 
-          const text = tile.dataset.text;
-
-          tile.width = newWidth;
-          tile.height = newHeight;
+          tile.width = tileWidth;
+          tile.height = tileHeight;
 
           const sourceX = parseInt(tile.dataset.sourceX || "0");
           const sourceY = parseInt(tile.dataset.sourceY || "0");
           const sourceWidth = parseInt(tile.dataset.sourceWidth || "0");
           const sourceHeight = parseInt(tile.dataset.sourceHeight || "0");
+
+          context.clearRect(0, 0, tileWidth, tileHeight);
 
           context.drawImage(
             image,
@@ -78,27 +86,21 @@ class Puzzle {
             sourceHeight,
             0,
             0,
-            newWidth,
-            newHeight
+            tileWidth,
+            tileHeight
           );
 
+          const text = tile.dataset.text;
           if (text) {
-            const fontSize = Math.min(newWidth, newHeight) * 0.4;
+            const fontSize = Math.min(tileWidth, tileHeight) * 0.35;
             context.font = `bold ${fontSize}px sans-serif`;
             context.textAlign = "center";
             context.textBaseline = "middle";
-
             context.strokeStyle = "#000";
             context.lineWidth = fontSize * 0.1;
-            context.strokeText(text, newWidth / 2, newHeight / 2);
-
+            context.strokeText(text, tileWidth / 2, tileHeight / 2);
             context.fillStyle = "#FFF";
-            context.fillText(text, newWidth / 2, newHeight / 2);
-
-            context.shadowColor = "transparent";
-            context.shadowBlur = 0;
-            context.shadowOffsetX = 0;
-            context.shadowOffsetY = 0;
+            context.fillText(text, tileWidth / 2, tileHeight / 2);
           }
         });
       }
@@ -161,13 +163,13 @@ class Puzzle {
     const gameField = document.querySelector(".game") as HTMLElement;
     const gameRow = document.createElement("div");
     gameRow.classList.add("game-row");
-    gameRow.style.height = `${Math.floor(image.width / 10)}`;
+    gameRow.style.height = `${Math.floor(image.naturalWidth / 10)}`;
 
     gameField.append(gameRow);
     for (let j = 0; j < length; j++) {
       const gameCell = document.createElement("div");
-      gameCell.style.width = `${Math.ceil(image.width / length)}px`;
-      gameCell.style.height = `${Math.ceil(image.height / 10)}px`;
+      gameCell.style.width = `${Math.ceil(image.naturalWidth / length)}px`;
+      gameCell.style.height = `${Math.ceil(image.naturalHeight / 10)}px`;
       gameCell.classList.add("game-cell");
 
       this.setDropZone(gameCell);
@@ -241,14 +243,8 @@ class Puzzle {
     return null;
   };
 
-  private readonly clearErrorMessage = () => {
-    const wrongText = document.querySelector("#wrong") as HTMLElement;
-    wrongText.textContent = "";
-  };
-
   private handleTileClick = (canvas: HTMLCanvasElement) => {
     if (this.isAnimating) return;
-    this.clearErrorMessage();
 
     if (canvas.parentElement?.classList.contains("pieces")) {
       const emptySlot = this.findFirstEmptySlot();
@@ -305,7 +301,6 @@ class Puzzle {
     this.createRow(image, length);
 
     const piecesArr: HTMLCanvasElement[] = [];
-    let width = 0;
     for (let i = 0; i < length; i++) {
       const canvas = document.createElement("canvas");
       canvas.classList.add("tile");
@@ -315,10 +310,12 @@ class Puzzle {
       canvas.height = Math.floor(image.height / 10);
       canvas.setAttribute("draggable", "true");
 
-      const sourceX = width;
+      const sourceX = Math.floor((image.naturalWidth / length) * i);
       const sourceY = this.cutHeight;
-      const sourceWidth = canvas.width;
-      const sourceHeight = canvas.height;
+
+      const sourceWidth = Math.floor(image.naturalWidth / length);
+      const sourceHeight = Math.floor(image.naturalHeight / 10);
+
       const destWidth = sourceWidth;
       const destHeight = sourceHeight;
       const destX = 0;
@@ -368,7 +365,6 @@ class Puzzle {
       });
 
       piecesArr.push(canvas);
-      width += Math.floor(image.width / length);
     }
 
     shuffleArr(piecesArr);
@@ -376,7 +372,7 @@ class Puzzle {
       pieces.append(canvas);
     });
 
-    this.cutHeight += Math.floor(image.height / 10);
+    this.cutHeight += Math.floor(image.naturalHeight / 10);
   };
 
   private getResultPhrase = (row: HTMLElement) => {
@@ -399,14 +395,39 @@ class Puzzle {
   public clear = () => {
     const phrase = document.querySelector(".phrase") as HTMLElement;
     const game = document.querySelector(".game") as HTMLElement;
-    const pieces = document.querySelector(".pieces") as HTMLElement;
+    const pieces = document.querySelector(".tile-container") as HTMLElement;
     phrase.innerHTML = "";
     game.innerHTML = "";
     pieces.innerHTML = "";
-    this.clearErrorMessage();
 
     this.correctAnswers = 0;
     this.rowTilesCount = [];
+    this.cutHeight = 0;
+  };
+
+  private readonly showErrorNotification = (message: string) => {
+    // Удаляем старые уведомления, если есть
+    const existing = document.querySelector(".error-toast");
+    if (existing) existing.remove();
+
+    const toast = document.createElement("div");
+    toast.className = "error-toast";
+
+    const icon = document.createElement("div");
+    icon.className = "error-icon";
+    icon.textContent = "✕";
+
+    const text = document.createElement("span");
+    text.textContent = message;
+
+    toast.appendChild(icon);
+    toast.appendChild(text);
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.remove(), 3000);
+
+    icon.addEventListener("click", () => toast.remove());
   };
 
   public init = (
@@ -414,7 +435,6 @@ class Puzzle {
     levelSelect: LevelSelect,
     wholeLevel: WordCollection[]
   ) => {
-    this.clear();
     const image = new Image();
     image.src = `${BASE_IMAGE_URL}${wordsData.levelData.imageSrc}`;
 
@@ -433,13 +453,11 @@ class Puzzle {
         const expected = wordsData.words[this.correctAnswers].textExample;
 
         if (hasEmptyCells) {
-          const wrongText = document.querySelector("#wrong") as HTMLElement;
-          wrongText.textContent = "Please fill in all cells";
+          this.showErrorNotification("Please fill in all cells");
           return;
         }
 
         if (result === expected) {
-          this.clearErrorMessage();
           row.style.pointerEvents = "none";
           row.classList.add("correct");
           this.correctAnswers++;
@@ -469,12 +487,7 @@ class Puzzle {
             });
           }
         } else {
-          const wrongText = document.querySelector("#wrong") as HTMLElement;
-          wrongText.textContent = "Not all parts stay in place";
-          wrongText.classList.add("shake");
-          setTimeout(() => {
-            wrongText.classList.remove("shake");
-          }, 500);
+          this.showErrorNotification("Not all parts stay in place");
         }
       }
     });

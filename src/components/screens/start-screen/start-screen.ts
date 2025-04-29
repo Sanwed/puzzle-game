@@ -15,6 +15,9 @@ class StartScreen {
       "Drag and drop words to form correct sentences or just click on them",
       "Each correct phrase reveals a part of the hidden image",
       "Complete all phrases to see the full picture",
+      "Press Space to show tiles or hide them or drag your mouse to bottom of the screen",
+      "When completing the row, click on the 'Check' button to check your answer",
+      "You can listen audio to hear the correct pronunciation",
       "Learn English while having fun!",
     ],
   };

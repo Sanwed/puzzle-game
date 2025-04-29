@@ -2,14 +2,12 @@
   display: grid;
   justify-content: center;
   justify-items: center;
-  grid-template-columns: 3vw 80vw;
+  grid-template-columns: 6vw 1fr;
+  grid-template-rows: 60px 80px 1fr 110px;
   gap: 15px;
   background-color: #f5f5f5;
   padding: 1rem;
-}
-
-.game-button-wrapper {
-  grid-column: 2 / -1;
+  overflow-y: auto;
 }
 
 .check-button {
@@ -33,12 +31,28 @@
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  max-height: calc(100vh - 200px);
   overflow-y: auto;
 }
 
-.phrase:hover, .numbers:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.pieces {
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  height: 110px;
+
+  transition: bottom 0.4s ease;
+  pointer-events: none; 
+}
+
+.pieces.visible {
+  bottom: 0;
+  pointer-events: auto;
 }
 
 .row-number {
