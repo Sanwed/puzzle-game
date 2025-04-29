@@ -24,12 +24,13 @@
 4. Сборка Webpack
 5. ООП стиль
    
+
 ## Скриншоты
-<img width="1470" alt="Screenshot 2025-04-28 at 23 01 26" src="https://github.com/user-attachments/assets/03d37840-7d61-4e5e-a610-0d124d33137c" />
-<img width="1470" alt="Screenshot 2025-04-28 at 23 01 49" src="https://github.com/user-attachments/assets/e0aac55f-7d0c-4715-89a8-5efcbcf41790" />
-<img width="1470" alt="Screenshot 2025-04-28 at 23 02 41" src="https://github.com/user-attachments/assets/8c415916-b3ff-4580-bd5f-e9e40c4f39bd" />
-<img width="1470" alt="Screenshot 2025-04-28 at 23 04 37" src="https://github.com/user-attachments/assets/fa44b29d-2fd0-4018-b834-9d191050724e" />
-<img width="1470" alt="Screenshot 2025-04-28 at 23 04 56" src="https://github.com/user-attachments/assets/dd48fdda-b986-4e24-96ed-a3508a6c4e19" />
+<img width="1428" alt="Screenshot 2025-04-29 at 21 41 28" src="https://github.com/user-attachments/assets/26f41e9c-6d08-42fe-b934-346f72c3c232" />
+<img width="1428" alt="Screenshot 2025-04-29 at 21 41 56" src="https://github.com/user-attachments/assets/4e3cb3a6-2b75-4023-8712-1c69335de980" />
+<img width="1428" alt="Screenshot 2025-04-29 at 21 43 32" src="https://github.com/user-attachments/assets/4f6607e2-b2f6-4d55-9352-577c68858bd7" />
+<img width="1433" alt="Screenshot 2025-04-29 at 21 46 02" src="https://github.com/user-attachments/assets/cc7e7afa-f781-42dd-9faa-1b5423093cd7" />
+
 
 
 
