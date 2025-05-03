@@ -4,7 +4,7 @@
 ## Как запустить
 1. Клонировать репозиторий ``https://github.com/Sanwed/puzzle-game.git``.
 2. ``npm start`` – запск проекта для локальной разработки.
-3. ``nps run build`` – сборка проекта.
+3. ``npm run build`` – сборка проекта.
 
 ## Особенности и функцинал
 - Основная суть игры – собрать изображение, восстанавливая английские предложения.
@@ -30,7 +30,3 @@
 <img width="1428" alt="Screenshot 2025-04-29 at 21 41 56" src="https://github.com/user-attachments/assets/4e3cb3a6-2b75-4023-8712-1c69335de980" />
 <img width="1428" alt="Screenshot 2025-04-29 at 21 43 32" src="https://github.com/user-attachments/assets/4f6607e2-b2f6-4d55-9352-577c68858bd7" />
 <img width="1433" alt="Screenshot 2025-04-29 at 21 46 02" src="https://github.com/user-attachments/assets/cc7e7afa-f781-42dd-9faa-1b5423093cd7" />
-
-
-
-
